@@ -141,7 +141,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
 
   <p>A publisher decides that by counting readers, so this page counts them. Your name and email are the whole ask, and the count is the only thing it is used for.</p>
 
-  <p>One question does more work than the rest. Nineteen of the choices in the last box are the plaintiff categories the book identifies &mdash; the groups with standing to carry this into federal court. Picking one says you have been kept from buying remanufactured goods you had a right to buy, and that yours is the group you want filing suit.</p>
+  <p>One question does more work than the rest. The book identifies nineteen groups with standing to carry this into federal court, and the last box lets you name the one you want filing suit. Choosing a group says you have been kept from buying remanufactured goods you had a right to buy. If none of them is you, say that instead &mdash; the count still matters.</p>
 
   <div class="panel">
    <div class="panel-inner">
@@ -429,39 +429,46 @@ footer em { display: block; margin-bottom: 0.5rem; }
       </div>
 
       <div class="field">
-        <label for="rc">Which readership brings you here?</label>
-        <select id="rc" name="fields[readership_category]" required>
+        <label for="rc1">Which readership brings you here?</label>
+        <select id="rc1">
           <option value="" selected disabled>Choose one</option>
-        <optgroup label="I want this group to be the principal group filing the suit">
-          <option value="01 — State Attorneys General" data-n="1">01 — State Attorneys General</option>
-          <option value="02 — Indian Tribes" data-n="2">02 — Indian Tribes</option>
-          <option value="03 — Governors" data-n="3">03 — Governors</option>
-          <option value="04 — Sheriffs" data-n="4">04 — Sheriffs</option>
-          <option value="05 — School Districts" data-n="5">05 — School Districts</option>
-          <option value="06 — Public Transit Authorities" data-n="6">06 — Public Transit Authorities</option>
-          <option value="07 — Volunteer Fire Departments" data-n="7">07 — Volunteer Fire Departments</option>
-          <option value="08 — Truckers (owner-operators)" data-n="8">08 — Truckers (owner-operators)</option>
-          <option value="09 — Earth-Moving Equipment Owners" data-n="9">09 — Earth-Moving Equipment Owners</option>
-          <option value="10 — Healthy-Lighting Medical Groups" data-n="10">10 — Healthy-Lighting Medical Groups</option>
-          <option value="11 — Hospitals" data-n="11">11 — Hospitals</option>
-          <option value="12 — Farming Associations" data-n="12">12 — Farming Associations</option>
-          <option value="13 — Coin-Laundry Operators" data-n="13">13 — Coin-Laundry Operators</option>
-          <option value="14 — Restaurant Owner Associations" data-n="14">14 — Restaurant Owner Associations</option>
-          <option value="15 — Construction Contractor Associations" data-n="15">15 — Construction Contractor Associations</option>
-          <option value="16 — Hotel and Lodging Operators" data-n="16">16 — Hotel and Lodging Operators</option>
-          <option value="17 — Apartment and Multi-Family Owners" data-n="17">17 — Apartment and Multi-Family Owners</option>
-          <option value="18 — Rideshare and Taxicab Drivers" data-n="18">18 — Rideshare and Taxicab Drivers</option>
-          <option value="19 — Landscaping Operators" data-n="19">19 — Landscaping Operators</option>
-        </optgroup>
-        <optgroup label="I am reading for other reasons">
-          <option value="20 — Every Household (general reader)" data-n="20">20 — Every Household (general reader)</option>
-          <option value="21 — The Hindered Sector (patients)" data-n="21">21 — The Hindered Sector (patients)</option>
-          <option value="22 — Legal interest (neutral interest, or legal issues interest me)" data-n="22">22 — Legal interest (neutral interest, or legal issues interest me)</option>
-          <option value="23 — Media interest (journalist, influencer, podcaster, blogger, book author)" data-n="23">23 — Media interest (journalist, influencer, podcaster, blogger, book author)</option>
-          <option value="24 — Opposition interest (I am against legalizing remanufacturing)" data-n="24">24 — Opposition interest (I am against legalizing remanufacturing)</option>
-        </optgroup>
+          <option value="20 — Every Household (general reader)" data-n="20">Every Household (general reader)</option>
+          <option value="21 — The Hindered Sector (patients)" data-n="21">The Hindered Sector (patients)</option>
+          <option value="22 — Legal interest (neutral interest, or legal issues interest me)" data-n="22">Legal interest (neutral interest, or legal issues interest me)</option>
+          <option value="23 — Media interest (journalist, influencer, podcaster, blogger, book author)" data-n="23">Media interest (journalist, influencer, podcaster, blogger, book author)</option>
+          <option value="24 — Opposition interest (I am against legalizing remanufacturing)" data-n="24">Opposition interest (I am against legalizing remanufacturing)</option>
+          <option value="__more" id="moreopt">Show me the plaintiff class categories &mdash; I am here to support one of them</option>
         </select>
       </div>
+
+      <div class="field" id="rc2field" hidden>
+        <label for="rc2">Which plaintiff class?</label>
+        <select id="rc2">
+          <option value="" selected disabled>Choose one</option>
+          <option value="01 — State Attorneys General" data-n="1">State Attorneys General</option>
+          <option value="02 — Indian Tribes" data-n="2">Indian Tribes</option>
+          <option value="03 — Governors" data-n="3">Governors</option>
+          <option value="04 — Sheriffs" data-n="4">Sheriffs</option>
+          <option value="05 — School Districts" data-n="5">School Districts</option>
+          <option value="06 — Public Transit Authorities" data-n="6">Public Transit Authorities</option>
+          <option value="07 — Volunteer Fire Departments" data-n="7">Volunteer Fire Departments</option>
+          <option value="08 — Truckers (owner-operators)" data-n="8">Truckers (owner-operators)</option>
+          <option value="09 — Earth-Moving Equipment Owners" data-n="9">Earth-Moving Equipment Owners</option>
+          <option value="10 — Healthy-Lighting Medical Groups" data-n="10">Healthy-Lighting Medical Groups</option>
+          <option value="11 — Hospitals" data-n="11">Hospitals</option>
+          <option value="12 — Farming Associations" data-n="12">Farming Associations</option>
+          <option value="13 — Coin-Laundry Operators" data-n="13">Coin-Laundry Operators</option>
+          <option value="14 — Restaurant Owner Associations" data-n="14">Restaurant Owner Associations</option>
+          <option value="15 — Construction Contractor Associations" data-n="15">Construction Contractor Associations</option>
+          <option value="16 — Hotel and Lodging Operators" data-n="16">Hotel and Lodging Operators</option>
+          <option value="17 — Apartment and Multi-Family Owners" data-n="17">Apartment and Multi-Family Owners</option>
+          <option value="18 — Rideshare and Taxicab Drivers" data-n="18">Rideshare and Taxicab Drivers</option>
+          <option value="19 — Landscaping Operators" data-n="19">Landscaping Operators</option>
+        </select>
+        <p class="hint">These are the nineteen groups the book identifies as having standing to sue.</p>
+      </div>
+
+      <input type="hidden" name="fields[readership_category]" id="rcfinal">
 
       <fieldset>
         <legend>If it is published, I intend to buy it in</legend>
@@ -555,7 +562,8 @@ footer em { display: block; margin-bottom: 0.5rem; }
 
   var $ = function (id) { return document.getElementById(id); };
   var f = $('f'), cy = $('cy'), zp = $('zp'), st = $('st'), sb = $('sb'),
-      rc = $('rc'), zf = $('zipfield'), msg = $('msg'), btn = $('btn');
+      rc1 = $('rc1'), rc2 = $('rc2'), rc2f = $('rc2field'),
+      rcfinal = $('rcfinal'), zf = $('zipfield'), msg = $('msg'), btn = $('btn');
 
   /* ---- ZIP -> state, entirely offline ---- */
   function stateFor(zip) {
@@ -584,14 +592,58 @@ footer em { display: block; margin-bottom: 0.5rem; }
   cy.addEventListener('change', refreshCountry);
   zp.addEventListener('input', refreshState);
 
-  /* ---- ?cat=8 preselects a readership ---- */
+  /* ---- two-stage readership picker ----
+     The first box stays short: the category the visitor arrived under (if any),
+     the five general readerships, and a door through to the nineteen plaintiff
+     classes. Numbers are stored, never shown. */
+
+  var PLAINTIFF = ["State Attorneys General","Indian Tribes","Governors","Sheriffs","School Districts","Public Transit Authorities","Volunteer Fire Departments","Truckers (owner-operators)","Earth-Moving Equipment Owners","Healthy-Lighting Medical Groups","Hospitals","Farming Associations","Coin-Laundry Operators","Restaurant Owner Associations","Construction Contractor Associations","Hotel and Lodging Operators","Apartment and Multi-Family Owners","Rideshare and Taxicab Drivers","Landscaping Operators"];
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  function setFinal(v) { rcfinal.value = v || ''; }
+
+  function openStageTwo(focus) {
+    rc2f.hidden = false;
+    setFinal(rc2.value);
+    if (focus) { rc2.focus(); }
+  }
+
+  function closeStageTwo() {
+    rc2f.hidden = true;
+    rc2.selectedIndex = 0;
+  }
+
   var m = /[?&]cat=(\d{1,2})/.exec(location.search);
-  if (m) {
-    var want = parseInt(m[1], 10);
-    Array.prototype.forEach.call(rc.options, function (o) {
-      if (parseInt(o.getAttribute('data-n'), 10) === want) { o.selected = true; }
+  var want = m ? parseInt(m[1], 10) : 0;
+
+  if (want >= 1 && want <= PLAINTIFF.length) {
+    /* arrived under a plaintiff class: put it at the top of box one, chosen */
+    var name = PLAINTIFF[want - 1];
+    var o = document.createElement('option');
+    o.value = pad(want) + ' — ' + name;
+    o.textContent = name;
+    o.setAttribute('data-n', String(want));
+    rc1.insertBefore(o, rc1.options[1]);
+    o.selected = true;
+    setFinal(o.value);
+    $('moreopt').textContent =
+      'Show me the other plaintiff class categories — I am here to support one of them';
+  } else if (want >= 20) {
+    Array.prototype.forEach.call(rc1.options, function (op) {
+      if (parseInt(op.getAttribute('data-n'), 10) === want) {
+        op.selected = true;
+        setFinal(op.value);
+      }
     });
   }
+
+  rc1.addEventListener('change', function () {
+    if (rc1.value === '__more') { openStageTwo(true); }
+    else { closeStageTwo(); setFinal(rc1.value); }
+  });
+
+  rc2.addEventListener('change', function () { setFinal(rc2.value); });
 
   /* ---- format checkboxes collapse into one field ---- */
   function refreshFormats() {
@@ -633,6 +685,13 @@ footer em { display: block; margin-bottom: 0.5rem; }
     if (thisYear - yr < 18) {
       e.preventDefault(); fail('You must be 18 or older to sign up.'); return;
     }
+    if (!rcfinal.value) {
+      e.preventDefault();
+      fail(rc1.value === '__more'
+        ? 'Please choose which plaintiff class brings you here.'
+        : 'Please choose the readership that brings you here.');
+      return;
+    }
     if (isUS() && !st.value) {
       e.preventDefault(); fail('That does not look like a United States ZIP code. Please check it.'); return;
     }
@@ -647,13 +706,13 @@ footer em { display: block; margin-bottom: 0.5rem; }
   function fail(text) {
     msg.textContent = text;
     msg.hidden = false;
-    msg.scrollIntoView({ block: 'center' });
+    if (msg.scrollIntoView) { msg.scrollIntoView({ block: 'center' }); }
   }
 
   /* the hidden iframe loads once the POST has been accepted */
   $('sink').addEventListener('load', function () {
     if (!sent) return;
-    var choice = rc.value ? rc.value.replace(/^\d+ \u2014 /, '') : '';
+    var choice = rcfinal.value ? rcfinal.value.replace(/^\d+ \u2014 /, '') : '';
     if (choice) {
       $('confirmline').textContent =
         'Thank you. You are counted under ' + choice +
@@ -662,7 +721,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
     f.hidden = true;
     $('signup').hidden = true;
     $('thanks').hidden = false;
-    $('thanks').scrollIntoView({ block: 'center' });
+    if ($('thanks').scrollIntoView) { $('thanks').scrollIntoView({ block: 'center' }); }
   });
 
   refreshCountry();
