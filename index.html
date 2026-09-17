@@ -110,6 +110,11 @@ button[disabled] { opacity: 0.55; cursor: default; }
 .privacy { font-size: 0.92rem; color: var(--ink-soft); margin: 1rem 0 0; }
 .err { color: var(--oxblood); font-weight: 700; margin: 0.75rem 0 0; }
 
+.subpanel { margin: 0.25rem 0 1.15rem; padding: 1rem 1rem 0.2rem; border-left: 3px solid var(--gold); background: #f6e3c3; }
+.subpanel .checks label, .toptick label { align-items: flex-start; }
+.subpanel .checks input, .toptick input { margin-top: 0.3rem; flex: none; }
+.optional { font-weight: 400; color: var(--ink-soft); }
+
 .thanks { text-align: left; }
 .thanks h2 { margin-top: 0; }
 
@@ -437,12 +442,13 @@ footer em { display: block; margin-bottom: 0.5rem; }
           <option value="22 — Legal interest (neutral interest, or legal issues interest me)" data-n="22">Legal interest (neutral interest, or legal issues interest me)</option>
           <option value="23 — Media interest (journalist, influencer, podcaster, blogger, book author)" data-n="23">Media interest (journalist, influencer, podcaster, blogger, book author)</option>
           <option value="24 — Opposition interest (I am against legalizing remanufacturing)" data-n="24">Opposition interest (I am against legalizing remanufacturing)</option>
+          <option value="25 — Dependent Industry" data-n="25" id="depopt">My business depends on one of the plaintiff classes</option>
           <option value="__more" id="moreopt">Show me the plaintiff class categories &mdash; I am here to support one of them</option>
         </select>
       </div>
 
       <div class="field" id="rc2field" hidden>
-        <label for="rc2">Which plaintiff class?</label>
+        <label for="rc2" id="rc2label">Which plaintiff class?</label>
         <select id="rc2">
           <option value="" selected disabled>Choose one</option>
           <option value="01 — State Attorneys General" data-n="1">State Attorneys General</option>
@@ -465,7 +471,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
           <option value="18 — Rideshare and Taxicab Drivers" data-n="18">Rideshare and Taxicab Drivers</option>
           <option value="19 — Landscaping Operators" data-n="19">Landscaping Operators</option>
         </select>
-        <p class="hint">These are the nineteen groups the book identifies as having standing to sue.</p>
+        <p class="hint" id="rc2hint">These are the nineteen groups the book identifies as having standing to sue.</p>
       </div>
 
       <input type="hidden" name="fields[readership_category]" id="rcfinal">
@@ -481,6 +487,33 @@ footer em { display: block; margin-bottom: 0.5rem; }
         <p class="hint">Check as many as you would consider. This is the number a publisher reads first.</p>
       </fieldset>
 
+      <div class="field checks toptick">
+        <label><input type="checkbox" id="bulkchk"> I may buy more than one copy &mdash; as gifts, or for my organization, members, employees or customers</label>
+      </div>
+
+      <div class="subpanel" id="bulkpanel" hidden>
+        <div class="field">
+          <label for="cp">About how many copies?</label>
+          <select id="cp" name="fields[copies_estimate]" disabled>
+            <option value="" selected disabled>Choose a range</option>
+            <option value="2–9">2 to 9</option>
+            <option value="10–24">10 to 24</option>
+            <option value="25–99">25 to 99</option>
+            <option value="100–499">100 to 499</option>
+            <option value="500+">500 or more</option>
+          </select>
+          <p class="hint">An estimate of interest, not an order. No payment is collected, and a publisher or bookseller would handle any sale.</p>
+        </div>
+        <div class="field">
+          <label for="org">Organization name <span class="optional">(leave blank if these are personal gifts)</span></label>
+          <input type="text" id="org" name="fields[org_name]" autocomplete="organization" maxlength="120" disabled>
+        </div>
+        <div class="field checks">
+          <label><input type="checkbox" id="okchk"> The author may share my name and organization with the publisher about bulk orders.</label>
+        </div>
+        <input type="hidden" name="fields[bulk_contact_ok]" id="okval" disabled>
+      </div>
+
       <input type="hidden" name="fields[state]" id="st">
       <input type="hidden" name="fields[formats_wanted]" id="fw">
       <input type="hidden" name="fields[date_entered]" id="de">
@@ -488,19 +521,20 @@ footer em { display: block; margin-bottom: 0.5rem; }
 
       <button type="submit" id="btn">Add me to the list</button>
       <p class="err" id="msg" hidden></p>
-      <p class="privacy">We will email you when the book is orderable, and for nothing else. Your address is never sold, shared or published. Unsubscribe with one click in any message.</p>
+      <p class="privacy">We will email you when the book is orderable, and for nothing else. Your address is never sold or published, and is shared with the publisher only if you check the bulk-order box above. Unsubscribe with one click in any message.</p>
     </form>
 
     <div class="thanks" id="thanks" hidden>
       <h2>You are on the list.</h2>
       <p id="confirmline">Check your email now &mdash; a one-click confirmation is on its way, and your name is not counted until you click it.</p>
+      <p>While you wait, everything in the reading list below is free to read now, and you can come back to this page any time for it without signing up again.</p>
       <p><strong>If it is not in your inbox, look in your spam or junk folder.</strong> First messages from a new sender often land there. Marking it &ldquo;not spam&rdquo; takes a second and makes sure you hear about the book when it is orderable.</p>
       <p>The fastest way to help from here is to send this page to any person who might want remanufacturing to be legalized for 20+ year old cars, trucks, machinery &mdash; anything regulated and blocked now, including even incandescent light bulbs over 25 watts. Send them the link: <a href="https://marti124.github.io/Patent_BkSignup/">https://marti124.github.io/Patent_BkSignup/</a> &mdash; this will cut our cost of living down from a third to a half if one favors buying newly remade patent-expired items vs newly designed ones.</p>
     </div>
    </div>
   </div>
 
-  <h2>Read it before you decide</h2>
+  <h2 id="reads">Read it before you decide</h2>
   <p>Everything below is free and online. The argument does not ask to be taken on trust.</p>
   <ul class="reads">
       <li>
@@ -545,7 +579,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
     <em>The Forgotten Half of the Patent Clause &nbsp;&middot;&nbsp; by Roleigh Martin &nbsp;&middot;&nbsp; Copyright &copy; 2026. All rights reserved.</em>
     To reach the author, or to send a paragraph:
     <a href="https://x.com/RoleighMartin">x.com/RoleighMartin</a> &nbsp;&middot;&nbsp;
-    <a href="mailto:RoleighMartin@proton.me">RoleighMartin@proton.me</a>
+    <a href="mailto:Roleigh@ExpiredPatentCommons.com">Roleigh@ExpiredPatentCommons.com</a>
   </footer>
 
 </div>
@@ -603,9 +637,28 @@ footer em { display: block; margin-bottom: 0.5rem; }
 
   function setFinal(v) { rcfinal.value = v || ''; }
 
+  var DEP = '25 — Dependent Industry';
+  function isDep() { return rc1.value === DEP; }
+
+  /* box two serves two purposes: choosing a plaintiff class to support,
+     or naming the plaintiff class a dependent business relies on */
+  function composeFinal() {
+    if (rc1.value === '__more') { setFinal(rc2.value); }
+    else if (isDep()) {
+      setFinal(rc2.value ? DEP + ': ' + rc2.value.replace(/^\d+ \u2014 /, '') : '');
+    } else { setFinal(rc1.value); }
+  }
+
   function openStageTwo(focus) {
+    var dep = isDep();
+    $('rc2label').textContent = dep
+      ? 'Which plaintiff class does your business depend on?'
+      : 'Which plaintiff class?';
+    $('rc2hint').textContent = dep
+      ? 'For example, a truck stop, parts supplier or repair shop that depends on truckers.'
+      : 'These are the nineteen groups the book identifies as having standing to sue.';
     rc2f.hidden = false;
-    setFinal(rc2.value);
+    composeFinal();
     if (focus) { rc2.focus(); }
   }
 
@@ -636,14 +689,29 @@ footer em { display: block; margin-bottom: 0.5rem; }
         setFinal(op.value);
       }
     });
+    if (isDep()) { openStageTwo(false); }
   }
 
   rc1.addEventListener('change', function () {
-    if (rc1.value === '__more') { openStageTwo(true); }
+    if (rc1.value === '__more' || isDep()) { rc2.selectedIndex = 0; openStageTwo(true); }
     else { closeStageTwo(); setFinal(rc1.value); }
   });
 
-  rc2.addEventListener('change', function () { setFinal(rc2.value); });
+  rc2.addEventListener('change', composeFinal);
+
+  /* ---- multiple-copy section: hidden fields are disabled so they are not sent ---- */
+  var bulkchk = $('bulkchk'), bulkpanel = $('bulkpanel'),
+      cp = $('cp'), org = $('org'), okchk = $('okchk'), okval = $('okval');
+
+  function refreshBulk() {
+    var on = bulkchk.checked;
+    bulkpanel.hidden = !on;
+    cp.disabled = org.disabled = okval.disabled = !on;
+    cp.required = on;
+    okval.value = okchk.checked ? 'Yes' : 'No';
+  }
+  bulkchk.addEventListener('change', refreshBulk);
+  okchk.addEventListener('change', refreshBulk);
 
   /* ---- format checkboxes collapse into one field ---- */
   function refreshFormats() {
@@ -689,13 +757,20 @@ footer em { display: block; margin-bottom: 0.5rem; }
       e.preventDefault();
       fail(rc1.value === '__more'
         ? 'Please choose which plaintiff class brings you here.'
-        : 'Please choose the readership that brings you here.');
+        : isDep()
+          ? 'Please choose which plaintiff class your business depends on.'
+          : 'Please choose the readership that brings you here.');
       return;
     }
     if (isUS() && !st.value) {
       e.preventDefault(); fail('That does not look like a United States ZIP code. Please check it.'); return;
     }
 
+    if (bulkchk.checked && !cp.value) {
+      e.preventDefault(); fail('Please choose about how many copies, or uncheck the multiple-copy box.'); return;
+    }
+
+    refreshBulk();
     refreshFormats();
     stamp();
     sent = true;
@@ -725,6 +800,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
   });
 
   refreshCountry();
+  refreshBulk();
 })();
 </script>
 
