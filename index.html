@@ -494,14 +494,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
       <div class="subpanel" id="bulkpanel" hidden>
         <div class="field">
           <label for="cp">About how many copies?</label>
-          <select id="cp" name="fields[copies_estimate]" disabled>
-            <option value="" selected disabled>Choose a range</option>
-            <option value="2–9">2 to 9</option>
-            <option value="10–24">10 to 24</option>
-            <option value="25–99">25 to 99</option>
-            <option value="100–499">100 to 499</option>
-            <option value="500+">500 or more</option>
-          </select>
+          <input type="text" id="cp" name="fields[copies_estimate]" inputmode="numeric" maxlength="7" pattern="[0-9,]{1,7}" placeholder="For example, 25" disabled>
           <p class="hint">An estimate of interest, not an order. No payment is collected, and a publisher or bookseller would handle any sale.</p>
         </div>
         <div class="field">
@@ -766,8 +759,12 @@ footer em { display: block; margin-bottom: 0.5rem; }
       e.preventDefault(); fail('That does not look like a United States ZIP code. Please check it.'); return;
     }
 
-    if (bulkchk.checked && !cp.value) {
-      e.preventDefault(); fail('Please choose about how many copies, or uncheck the multiple-copy box.'); return;
+    if (bulkchk.checked) {
+      var n = parseInt((cp.value || '').replace(/,/g, ''), 10);
+      if (!n || n < 2) {
+        e.preventDefault(); fail('Please enter about how many copies (2 or more), or uncheck the multiple-copy box.'); return;
+      }
+      cp.value = String(n);
     }
 
     refreshBulk();
