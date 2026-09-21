@@ -117,6 +117,11 @@ button[disabled] { opacity: 0.55; cursor: default; }
 
 .thanks { text-align: left; }
 
+/* ---- arrival from a Kit confirmation link ---- */
+.confirmed { margin: 1.5rem 0 0; padding: 1.1rem 1.35rem; border: 2px solid var(--navy); background: #fffaf0; }
+.confirmed h2 { margin: 0 0 0.4rem; }
+.confirmed p { margin: 0; }
+
 /* ---- testimonial ---- */
 .saybox { margin: 2.5rem 0 0; padding: 1.25rem 1.35rem; border: 1px solid var(--rule); background: var(--parchment-deep); }
 .saybox h2 { margin-top: 0; }
@@ -159,6 +164,11 @@ footer em { display: block; margin-bottom: 0.5rem; }
 <img class="banner" src="banner.jpg" alt="The Forgotten Half of the Patent Clause &mdash; what the Constitution said, what the Supreme Court confirmed, what post-1970 regulations did anyway.">
 
 <div class="wrap">
+
+  <div class="confirmed" id="confirmed" hidden>
+    <h2 id="cfhead"></h2>
+    <p id="cftext"></p>
+  </div>
 
   <h1>Tell the publisher you want the book, <i>The Forgotten Half of the Patent Clause</i></h1>
 
@@ -1009,6 +1019,20 @@ footer em { display: block; margin-bottom: 0.5rem; }
   });
 
   refreshT();
+
+  /* ---- arriving from Kit after clicking a confirmation button ---- */
+  var cm = /[?&]confirmed=(signup|testimonial)\b/.exec(location.search);
+  if (cm) {
+    var isT = cm[1] === 'testimonial';
+    $('cfhead').textContent = isT ? 'Your testimonial is confirmed.' : 'You are confirmed and counted.';
+    $('cftext').textContent = isT
+      ? 'Thank you. It may now be shown to publishers and agents. Everything in the reading list below is free to read while the book finds its publisher.'
+      : 'Thank you. You will hear from me when the book is orderable, and not before. Everything in the reading list below is free to read now.';
+    $('confirmed').hidden = false;
+    /* they are already on the list, so the signup form is not needed here */
+    var panel = document.querySelector('.panel');
+    if (panel) { panel.hidden = true; }
+  }
 })();
 </script>
 
