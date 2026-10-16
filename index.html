@@ -526,6 +526,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
           <label><input type="checkbox" class="fmt" value="Kindle"> Kindle</label>
         </div>
         <p class="hint">Check as many as you would consider. This is the number a publisher reads first.</p>
+        <p class="hint" id="fmtcount" hidden></p>
       </fieldset>
 
       <div class="field checks toptick">
@@ -535,7 +536,8 @@ footer em { display: block; margin-bottom: 0.5rem; }
       <div class="subpanel" id="bulkpanel" hidden>
         <div class="field">
           <label for="cp">About how many copies?</label>
-          <input type="text" id="cp" name="fields[copies_estimate]" inputmode="numeric" maxlength="7" pattern="[0-9,]{1,7}" placeholder="For example, 25" disabled>
+          <input type="text" id="cp" inputmode="numeric" maxlength="7" pattern="[0-9,]{1,7}" placeholder="For example, 25" disabled>
+          <p class="hint" id="cpmin" hidden></p>
           <p class="hint">An estimate of interest, not an order. No payment is collected, and a publisher or bookseller would handle any sale.</p>
         </div>
         <div class="field">
@@ -550,6 +552,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
 
       <input type="hidden" name="fields[state]" id="st">
       <input type="hidden" name="fields[formats_wanted]" id="fw">
+      <input type="hidden" name="fields[copies_estimate]" id="cpfinal">
       <input type="hidden" name="fields[date_entered]" id="de">
       <input type="hidden" name="fields[time_entered]" id="te">
 
@@ -849,7 +852,34 @@ footer em { display: block; margin-bottom: 0.5rem; }
     cp.disabled = org.disabled = okval.disabled = !on;
     cp.required = on;
     okval.value = okchk.checked ? 'Yes' : 'No';
+    refreshCopies();
   }
+
+  /* ---- copies: never fewer than the number of formats checked ----
+     Unticked multiple-copy box: copies = formats checked (one copy per format).
+     Ticked: copies = the larger of the number typed and the formats checked. */
+  function formatCount() {
+    return document.querySelectorAll('.fmt:checked').length;
+  }
+  function copiesFinal() {
+    var k = formatCount();
+    if (bulkchk.checked) {
+      var n = parseInt((cp.value || '').replace(/,/g, ''), 10) || 0;
+      return Math.max(n, k) || '';
+    }
+    return k || '';
+  }
+  function refreshCopies() {
+    var k = formatCount(), fc = $('fmtcount'), cm = $('cpmin');
+    fc.hidden = !(k && !bulkchk.checked);
+    fc.textContent = k === 1
+      ? 'Counted as 1 copy. If you may buy more, tick the box below.'
+      : 'Counted as ' + k + ' copies, one per format. If you may buy more, tick the box below.';
+    cm.hidden = !(k > 1 && bulkchk.checked);
+    cm.textContent = 'At least ' + k + ', one for each format you checked.';
+    $('cpfinal').value = String(copiesFinal());
+  }
+  cp.addEventListener('input', refreshCopies);
   bulkchk.addEventListener('change', refreshBulk);
   okchk.addEventListener('change', refreshBulk);
 
@@ -860,6 +890,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
       if (c.checked) { picked.push(c.value); }
     });
     $('fw').value = picked.join(', ');
+    refreshCopies();
   }
   Array.prototype.forEach.call(document.querySelectorAll('.fmt'), function (c) {
     c.addEventListener('change', refreshFormats);
@@ -916,6 +947,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
 
     refreshBulk();
     refreshFormats();
+    refreshCopies();
     stamp();
     sent = true;
     btn.disabled = true;
