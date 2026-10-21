@@ -166,6 +166,35 @@ footer em { display: block; margin-bottom: 0.5rem; }
   .panel-inner { padding: 1.1rem 0.9rem 1.35rem; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---- compact sign-up form: label beside its box, tight rows ---- */
+#f .field, #f fieldset { display: grid; grid-template-columns: 7.6rem 1fr; align-items: center; column-gap: 0.6rem; margin: 0 0 0.3rem; }
+#f [hidden] { display: none !important; }
+#f .field > label, #f legend { margin: 0; font-size: 0.95rem; line-height: 1.2; }
+#f .field > .hint, #f .field > .inline { grid-column: 2; }
+#f input[type=text], #f input[type=email], #f select { padding: 0.22rem 0.5rem; font-size: 1rem; line-height: 1.3; }
+#f .inline { display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
+#f .inline input { flex: none; }
+#f .inline .statebox, #f .inline .hint { margin: 0; min-height: 0; font-size: 0.85rem; line-height: 1.2; }
+#zp { width: 7.5rem !important; }
+#yr { width: 5rem !important; }
+#f .hint { font-size: 0.85rem; line-height: 1.25; margin: 0.15rem 0 0; }
+.panel-inner { padding: 0.8rem 1rem 0.9rem; }
+.panel h2#signup { margin: 0 0 0.45rem; font-size: 1.15rem; line-height: 1.2; }
+#f fieldset.copies { display: block; margin: 0.45rem 0 0.2rem; }
+#f fieldset.copies legend { float: left; width: 100%; margin-bottom: 0.2rem; }
+.copygrid { clear: both; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 0.6rem; }
+.copygrid label { display: flex; flex-direction: column; align-items: stretch; gap: 0.1rem; margin: 0; font-weight: 400; font-size: 0.85rem; line-height: 1.2; color: var(--ink); }
+.copygrid input { width: 100% !important; text-align: center; }
+.copytotal { font-weight: 400; color: var(--ink-soft); font-size: 0.85rem; }
+#bulkpanel { margin: 0.2rem 0 0.4rem; }
+#bulkpanel .checks label { font-weight: 400; font-size: 0.9rem; line-height: 1.3; color: var(--ink); align-items: flex-start; margin: 0; }
+#bulkpanel .checks input { margin-top: 0.15rem; flex: none; }
+#f button { margin-top: 0.45rem; padding: 0.5rem 1rem; font-size: 1.05rem; }
+#f .privacy { font-size: 0.78rem; line-height: 1.3; margin: 0.45rem 0 0; }
+@media (max-width: 34rem) {
+  #f .field { grid-template-columns: 6.4rem 1fr; }
+}
 </style>
 </head>
 <body>
@@ -202,7 +231,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
       </div>
 
       <div class="field">
-        <label for="em">Email address</label>
+        <label for="em">Email</label>
         <input type="email" id="em" name="email_address" required autocomplete="email" inputmode="email">
       </div>
 
@@ -464,18 +493,22 @@ footer em { display: block; margin-bottom: 0.5rem; }
 
       <div class="field" id="zipfield">
         <label for="zp">ZIP code</label>
-        <input type="text" id="zp" name="fields[home_zipcode]" inputmode="numeric" autocomplete="postal-code" maxlength="10" pattern="[0-9]{5}(-[0-9]{4})?">
-        <span class="statebox" id="sb"></span>
+        <div class="inline">
+          <input type="text" id="zp" name="fields[home_zipcode]" inputmode="numeric" autocomplete="postal-code" maxlength="10" pattern="[0-9]{5}(-[0-9]{4})?">
+          <span class="statebox" id="sb"></span>
+        </div>
       </div>
 
       <div class="field">
-        <label for="yr">Year you were born</label>
-        <input type="text" id="yr" name="fields[year_of_birth]" required inputmode="numeric" maxlength="4" pattern="(19|20)[0-9]{2}" placeholder="1968">
-        <p class="hint">You must be 18 or older to sign up.</p>
+        <label for="yr">Year born</label>
+        <div class="inline">
+          <input type="text" id="yr" name="fields[year_of_birth]" required inputmode="numeric" maxlength="4" pattern="(19|20)[0-9]{2}" placeholder="1968">
+          <span class="hint">Must be 18 or older.</span>
+        </div>
       </div>
 
       <div class="field">
-        <label for="rc1">Which readership brings you here?</label>
+        <label for="rc1">Readership</label>
         <select id="rc1">
           <option value="" selected disabled>Choose one</option>
           <option value="20 — Every Household (general reader)" data-n="20">Every Household (general reader)</option>
@@ -489,7 +522,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
       </div>
 
       <div class="field" id="rc2field" hidden>
-        <label for="rc2" id="rc2label">Which plaintiff class?</label>
+        <label for="rc2" id="rc2label">Plaintiff class</label>
         <select id="rc2">
           <option value="" selected disabled>Choose one</option>
           <option value="01 — State Attorneys General" data-n="1">State Attorneys General</option>
@@ -517,35 +550,24 @@ footer em { display: block; margin-bottom: 0.5rem; }
 
       <input type="hidden" name="fields[readership_category]" id="rcfinal">
 
-      <fieldset>
-        <legend>If it is published, I intend to buy it in</legend>
-        <div class="checks">
-          <label><input type="checkbox" class="fmt" value="Hardcover"> Hardcover</label>
-          <label><input type="checkbox" class="fmt" value="Paperback"> Paperback</label>
-          <label><input type="checkbox" class="fmt" value="Audiobook"> Audiobook</label>
-          <label><input type="checkbox" class="fmt" value="Kindle"> Kindle</label>
+      <fieldset class="copies">
+        <legend>How many copies would you buy? <span class="copytotal" id="cptotal"></span></legend>
+        <div class="copygrid">
+          <label>Hardcover <input type="text" class="cpn" id="cph" name="fields[copies_hardcover]" data-fmt="Hardcover" inputmode="numeric" maxlength="5" placeholder="0"></label>
+          <label>Paperback <input type="text" class="cpn" id="cpp" name="fields[copies_paperback]" data-fmt="Paperback" inputmode="numeric" maxlength="5" placeholder="0"></label>
+          <label>Audiobook <input type="text" class="cpn" id="cpa" name="fields[copies_audiobook]" data-fmt="Audiobook" inputmode="numeric" maxlength="5" placeholder="0"></label>
+          <label>Kindle <input type="text" class="cpn" id="cpk" name="fields[copies_kindle]" data-fmt="Kindle" inputmode="numeric" maxlength="5" placeholder="0"></label>
         </div>
-        <p class="hint">Check as many as you would consider. This is the number a publisher reads first.</p>
-        <p class="hint" id="fmtcount" hidden></p>
+        <p class="hint">Not an order &mdash; publishers read this first.</p>
       </fieldset>
 
-      <div class="field checks toptick">
-        <label><input type="checkbox" id="bulkchk"> I may buy more than one copy &mdash; as gifts, or for my organization, members, employees or customers</label>
-      </div>
-
-      <div class="subpanel" id="bulkpanel" hidden>
+      <div id="bulkpanel" hidden>
         <div class="field">
-          <label for="cp">About how many copies?</label>
-          <input type="text" id="cp" inputmode="numeric" maxlength="7" pattern="[0-9,]{1,7}" placeholder="For example, 25" disabled>
-          <p class="hint" id="cpmin" hidden></p>
-          <p class="hint">An estimate of interest, not an order. No payment is collected, and a publisher or bookseller would handle any sale.</p>
-        </div>
-        <div class="field">
-          <label for="org">Organization name <span class="optional">(leave blank if these are personal gifts)</span></label>
-          <input type="text" id="org" name="fields[org_name]" autocomplete="organization" maxlength="120" disabled>
+          <label for="org">Organization</label>
+          <input type="text" id="org" name="fields[org_name]" autocomplete="organization" maxlength="120" placeholder="Optional; blank if gifts" disabled>
         </div>
         <div class="field checks">
-          <label><input type="checkbox" id="okchk"> The author may share my name and organization with the publisher about bulk orders.</label>
+          <label style="grid-column:1 / -1"><input type="checkbox" id="okchk"> The author may share my name and organization with the publisher about bulk orders.</label>
         </div>
         <input type="hidden" name="fields[bulk_contact_ok]" id="okval" disabled>
       </div>
@@ -558,7 +580,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
 
       <button type="submit" id="btn">Add me to the list</button>
       <p class="err" id="msg" hidden></p>
-      <p class="privacy">We will email you when the book is orderable, and for nothing else. Your address is never sold or published, and is shared with the publisher only if you check the bulk-order box above. Unsubscribe with one click in any message.</p>
+      <p class="privacy">We will email you when the book is orderable, and for nothing else. Your address is never sold or published, and is shared with the publisher only if you check the bulk-order box. Unsubscribe with one click in any message.</p>
     </form>
 
     <div class="thanks" id="thanks" hidden>
@@ -847,59 +869,40 @@ footer em { display: block; margin-bottom: 0.5rem; }
 
   rc2.addEventListener('change', composeFinal);
 
-  /* ---- multiple-copy section: hidden fields are disabled so they are not sent ---- */
-  var bulkchk = $('bulkchk'), bulkpanel = $('bulkpanel'),
-      cp = $('cp'), org = $('org'), okchk = $('okchk'), okval = $('okval');
+  /* ---- copies by format: four counts, added into one total ----
+     Each format's count is sent in its own field; the total goes in
+     copies_estimate, and formats_wanted carries the breakdown as text.
+     Two or more copies opens the organization / permission row. */
+  var cpns = document.querySelectorAll('.cpn'),
+      bulkpanel = $('bulkpanel'), org = $('org'), okchk = $('okchk'), okval = $('okval');
 
-  function refreshBulk() {
-    var on = bulkchk.checked;
-    bulkpanel.hidden = !on;
-    cp.disabled = org.disabled = okval.disabled = !on;
-    cp.required = on;
-    okval.value = okchk.checked ? 'Yes' : 'No';
-    refreshCopies();
-  }
-
-  /* ---- copies: never fewer than the number of formats checked ----
-     Unticked multiple-copy box: copies = formats checked (one copy per format).
-     Ticked: copies = the larger of the number typed and the formats checked. */
-  function formatCount() {
-    return document.querySelectorAll('.fmt:checked').length;
-  }
-  function copiesFinal() {
-    var k = formatCount();
-    if (bulkchk.checked) {
-      var n = parseInt((cp.value || '').replace(/,/g, ''), 10) || 0;
-      return Math.max(n, k) || '';
-    }
-    return k || '';
+  function countOf(input) {
+    var n = parseInt((input.value || '').replace(/[^0-9]/g, ''), 10);
+    return n > 0 ? n : 0;
   }
   function refreshCopies() {
-    var k = formatCount(), fc = $('fmtcount'), cm = $('cpmin');
-    fc.hidden = !(k && !bulkchk.checked);
-    fc.textContent = k === 1
-      ? 'Counted as 1 copy. If you may buy more, tick the box below.'
-      : 'Counted as ' + k + ' copies, one per format. If you may buy more, tick the box below.';
-    cm.hidden = !(k > 1 && bulkchk.checked);
-    cm.textContent = 'At least ' + k + ', one for each format you checked.';
-    $('cpfinal').value = String(copiesFinal());
-  }
-  cp.addEventListener('input', refreshCopies);
-  bulkchk.addEventListener('change', refreshBulk);
-  okchk.addEventListener('change', refreshBulk);
-
-  /* ---- format checkboxes collapse into one field ---- */
-  function refreshFormats() {
-    var picked = [];
-    Array.prototype.forEach.call(document.querySelectorAll('.fmt'), function (c) {
-      if (c.checked) { picked.push(c.value); }
+    var total = 0, parts = [];
+    Array.prototype.forEach.call(cpns, function (c) {
+      var n = countOf(c);
+      total += n;
+      if (n) { parts.push(c.getAttribute('data-fmt') + ': ' + n); }
     });
-    $('fw').value = picked.join(', ');
-    refreshCopies();
+    $('fw').value = parts.join(', ');
+    $('cpfinal').value = total ? String(total) : '';
+    $('cptotal').textContent = total ? '(total ' + total + ')' : '';
+    var on = total >= 2;
+    bulkpanel.hidden = !on;
+    org.disabled = okval.disabled = !on;
+    okval.value = okchk.checked ? 'Yes' : 'No';
   }
-  Array.prototype.forEach.call(document.querySelectorAll('.fmt'), function (c) {
-    c.addEventListener('change', refreshFormats);
+  Array.prototype.forEach.call(cpns, function (c) {
+    c.addEventListener('input', function () {
+      var clean = c.value.replace(/[^0-9]/g, '');
+      if (clean !== c.value) { c.value = clean; }
+      refreshCopies();
+    });
   });
+  okchk.addEventListener('change', refreshCopies);
 
   /* ---- EST stamps ---- */
   function stamp() {
@@ -942,16 +945,9 @@ footer em { display: block; margin-bottom: 0.5rem; }
       e.preventDefault(); fail('That does not look like a United States ZIP code. Please check it.'); return;
     }
 
-    if (bulkchk.checked) {
-      var n = parseInt((cp.value || '').replace(/,/g, ''), 10);
-      if (!n || n < 2) {
-        e.preventDefault(); fail('Please enter about how many copies (2 or more), or uncheck the multiple-copy box.'); return;
-      }
-      cp.value = String(n);
-    }
-
-    refreshBulk();
-    refreshFormats();
+    Array.prototype.forEach.call(cpns, function (c) {
+      c.value = countOf(c) ? String(countOf(c)) : '0';
+    });
     refreshCopies();
     stamp();
     sent = true;
@@ -981,7 +977,7 @@ footer em { display: block; margin-bottom: 0.5rem; }
   });
 
   refreshCountry();
-  refreshBulk();
+  refreshCopies();
 
   /* ---- testimonial dialog ---- */
   var tdlg = $('tdlg'), tf = $('tf'), tt = $('tt'), tn = $('tn'), th = $('th'),
